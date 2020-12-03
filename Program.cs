@@ -4,234 +4,147 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InheritanceAssignment
-
+namespace Assignment1
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Employee e1 = new Manager("T", 2, "manager");
-            e1.Basic = 2500;
-            e1.Display();
-            Console.WriteLine();
-            
-            Employee e2 = new GeneralManager("neha", 3, "GeneralManager", "xyz");
-            e2.Basic = 30000;
-            e2.Display();
-            Console.WriteLine();
-            
-            Employee e3 = new CEO("sweety", 4);
-            e3.Basic = 10000000;
-            e3.Display();
-            Console.WriteLine();
+            //Employee e = new Employee();
+            //e.Basic=30;
+            //Console.WriteLine(e.Basic);
+            //e.Name="neha";
+            //Console.WriteLine(e.Name);
+            //e.DeptNo = 1;
+            //Console.WriteLine(e.DeptNo);
+            //Employee.EmpNo=0;
+            //Console.WriteLine(Employee.EmpNo);
+            //Console.WriteLine(Employee.EmpNo);
 
-          
-            Employee e4 = new Manager();
+           // Console.WriteLine(e.GetNetSalary());
 
-            e4.Display();
-            Console.WriteLine();
-          
-            Employee e5 = new GeneralManager();
 
-            e5.Display();
-            Console.WriteLine();
-          
 
-            Employee e6 = new CEO();
+            Employee o1 = new Employee("Amol", 34, 10);
 
-            e6.Display();
-            Console.WriteLine();
+            // Console.WriteLine(o1.EmpNo+" " +o1.DeptNo+" "+o1.Basic );
+            //Console.WriteLine(o1.GetNetSalary());
+            Console.WriteLine(o1.EmpNo);
+            Employee o2 = new Employee("Amol", 46);
+            Console.WriteLine(o2.EmpNo);
+            Employee o3 = new Employee("Amol");
+            Console.WriteLine(o3.EmpNo);
+            Employee o4 = new Employee();
+            Console.WriteLine(o4.EmpNo);
+            // o3.EmpNo--;
 
-          
-            Console.ReadLine();
+            // Employee o3 = new Employee("Amol");
+            Console.WriteLine(o4.EmpNo);
+            Console.WriteLine(o3.EmpNo);
+            Console.WriteLine(o2.EmpNo);
+            Console.WriteLine(o1.EmpNo);
+
         }
     }
-    abstract class Employee
-    {
-        //constructor
-        public Employee()
-        { }
 
-        //name property
+    class Employee
+    {
+
+        public Employee()
+        {
+            emp_no=++var;
+        }
+
+        public Employee(string Name)
+        {
+            this.Name = Name;
+            emp_no=++var;
+        }
+
+        public Employee(string Name,int Basic)
+        {
+            emp_no=++var;
+            this.Name = Name;
+            this.Basic = Basic;
+        }
+        public Employee(string Name, int Basic, short DeptNo)
+        {
+            emp_no=++var;
+            this.Name = Name;
+            this.Basic = Basic;
+            this.DeptNo = DeptNo;
+            
+        }
         private string name;
         public string Name
         {
-            get { return name; }
             set
             {
-                if (value == "default")
-                {
-                    name = "Employee";
-                }
-                else
-                {
+                if(value != null)
                     name = value;
-                }
+                else
+                    Console.WriteLine("name can't be null");
+            }
+            get
+            {
+                return name;
             }
         }
 
-        //empNo property
-        private int empNo;
-        private static int S_empno = 0;
-        public int EmpNo
+        private  int emp_no;
+        private static int var;
+        public  int EmpNo
         {
-            get { return empNo; }
-            private set { empNo = ++S_empno; }
+           
+            get
+            {
+             
+                return emp_no;
+            }
+            
+
         }
 
-        //dept_no property
-        private short deptNo;
-        public short DeptNo
+        private int basic;
+        public int Basic
         {
-            get { return deptNo; }
             set
             {
-                if (value == 0)
-                {
-                    deptNo = 1;
-                }
-
-                deptNo = value;
+                if (value > 20 && value < 50)
+                    basic = value;
+                else
+                    Console.WriteLine("invalid");
             }
-        }
-
-        //basic property
-        protected decimal basic;
-        public abstract decimal Basic { set; get; }
-
-        public Employee(string name = "default", short depNo = 0)
-        {
-            EmpNo = 23;
-            this.Name = name;
-            this.DeptNo = depNo;
-        }
-       
-
-        public abstract decimal CalcNetSalary();
-
-        public virtual void Display()
-        {
-            Console.Write(EmpNo + " " + Name + " " + DeptNo + " " + basic + " " + CalcNetSalary() + " ");
-        }
-    }
-
-
-   
-    class Manager : Employee
-    {
-        private string designation;
-
-
-        public string Designation
-        {
-            get { return designation; }
-            set
-            {
-                if (value == "default")
-                {
-                    designation = "employee";
-                }
-                designation = value;
-            }
-        }
-
-        public Manager(string name = "default", short depNo = 0, string designation = "default") : base(name, depNo)
-        {
-            this.Designation = designation;
-        }
-        public override decimal Basic
-        {
             get
             {
                 return basic;
             }
+        }
 
+        private short dept_no;
+        public short DeptNo
+        {
             set
             {
-                if (value <= 15000)
-                {
-                    basic = 15000;
-                }
-
-                basic = value;
+                if (value > 0)
+                    dept_no = value;
+                else
+                    Console.WriteLine("invalid");
+            }
+            get
+            {
+                return dept_no;
             }
         }
 
-        public override decimal CalcNetSalary()
+
+        public float GetNetSalary()
         {
-            return Basic * 1000;
+            float sal = Basic + 4000 + 1000;
+            return sal;
         }
 
-       
-        public override void Display()
-        {
-            base.Display();
-            Console.Write(designation);
-        }
-    }
 
-    class GeneralManager : Manager
-    {
-        private string perks;
-        public string Perks
-        {
-            get { return perks; }
-            set { perks = value; }
-        }
-        public GeneralManager(string name = "default", short depNo = 0, string designation = "default", string perks = "default") : base(name, depNo, designation)
-        {
-            this.Perks = perks;
-        }
-
-        public override void Display()
-        {
-            base.Display();
-            Console.Write(" " + Perks);
-        }
 
     }
-
-    class CEO : Employee
-    {
-        public override decimal Basic
-        {
-            get { return basic; }
-            set
-            {
-                if (value <= 5000)
-                {
-                    basic = 5000;
-                }
-                basic = value;
-            }
-        }
-
-        public CEO(string name = "default", short deptNo = 0) : base(name, deptNo)
-        {
-
-        }
-        public sealed override decimal CalcNetSalary()
-        {
-            return Basic * 1000 * 20;
-        }
-    }
-
-    class jack : Employee
-    {
-        public override decimal Basic { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public override decimal CalcNetSalary()
-        {
-            Console.WriteLine("jack Sealed Method");
-            return 3;
-        }
-    }
-
-
 }
-
-
-
-
-
